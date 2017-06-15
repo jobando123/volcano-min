@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Volcano</title>
+    <script type="text/javascript" src='gen.js'></script>
+    <style type="text/css">
+        #container {
+            left: 20%;
+            position: relative;
+            background-image: url('plot.png');
+            background-repeat: no-repeat;
+        }
+
+        .point {
+            float: left;
+            background-color: red;
+            position: absolute;
+            width: 5px; height: 5px;
+            margin-left: -2.5px; margin-top: -2.5px;
+            border-radius: 50%;
+            z-index: 99;
+        }
+
+        .point .tooltip {
+            position: absolute;
+            width: 100px;
+            margin-left: -50px;
+            margin-top: -2em;
+            visibility: hidden;
+            text-align: center;
+            border-radius: 8px;
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+        }
+
+        .point:hover .tooltip {
+            visibility: visible;
+        }
+
+        #plot {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1 align="center">Volcano!</h1>
+    <div id='container'>
+        <img id='plot' src="plot.png" />
+    </div>
+    <script type="text/javascript">
+        const TIMEOUT = 50;
+
+        var i = 0;
+        var plot = document.getElementById('container');
+
+        function add_point() {
+            if (i == obj.names.length) {
+                clearTimeout(id);
+                return;
+            }
+
+            var div = document.createElement('div');
+            div.innerHTML = "<div class='tooltip'>" + obj.names[i] + "</div>";
+            div.className = 'point';
+            div.style.top = obj.y[i] + 'px';
+            div.style.left = obj.x[i] + 'px';
+            plot.appendChild(div);
+            i += 1;
+
+            setTimeout(add_point, TIMEOUT);
+        }
+
+        var id = setTimeout(add_point, TIMEOUT);
+    </script>
+</body>
+</html>
